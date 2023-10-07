@@ -1,5 +1,6 @@
 'use client';
 
+import { IReactHookFormController } from '@/types';
 import {
   Controller,
   ControllerFieldState,
@@ -15,19 +16,16 @@ interface IProps {
   control?: any;
 }
 
-interface IPrintInput {
-  field: ControllerRenderProps<FieldValues, string>;
-  fieldState: ControllerFieldState;
-  formState: UseFormStateReturn<FieldValues>;
-}
-
 export default function InputField({
   inputType,
   label,
   name,
   control,
 }: IProps) {
-  const printInput = ({ field, formState }: Partial<IPrintInput>) => {
+  const printInput = ({
+    field,
+    formState,
+  }: Partial<IReactHookFormController>) => {
     const errorMessage = formState?.errors?.[field!?.name]?.message;
     const labelErrorClass = errorMessage ? 'text-red-500' : '';
     const inputErrorClass = errorMessage ? 'input-error' : '';
@@ -39,7 +37,7 @@ export default function InputField({
           name={name}
           type={inputType}
           className={`input ${inputErrorClass} input-bordered w-full`}
-          {...field}
+          {...((field || {}) as any)}
         />
         {errorMessage && (
           <label className={`label label-text-alt ${labelErrorClass}`}>
