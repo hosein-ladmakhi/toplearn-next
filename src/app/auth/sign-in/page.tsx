@@ -2,6 +2,10 @@ import Typography from '@/common/Typography';
 import SigninForm from '@/components/sign-in/SignInForm';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Sign-in Page',
+};
+
 export default function SigninPage() {
   return (
     <>
