@@ -9,6 +9,7 @@ import Textarea from '@/common/Textarea';
 import { useForm } from 'react-hook-form';
 import zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ISignupFormField } from '@/types';
 
 const formValidation = zod.object({
   username: zod
@@ -29,17 +30,22 @@ const formValidation = zod.object({
   bio: zod.string().optional(),
 });
 
-export default function SignUpForm() {
+export default function SignUpForm({}) {
   const [image, setImage] = useState<File>();
   const onChangeImage = (file: File) => setImage(file);
 
-  const { control } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(formValidation),
     mode: 'all',
   });
 
+  const onSubmitForm = (data: ISignupFormField) => {};
+
   return (
-    <form className="sm:w-4/12 xs:9/12">
+    <form
+      onSubmit={handleSubmit(onSubmitForm as any)}
+      className="sm:w-4/12 xs:9/12"
+    >
       <ImagePicker file={image} onChangeFile={onChangeImage} />
 
       <InputField
