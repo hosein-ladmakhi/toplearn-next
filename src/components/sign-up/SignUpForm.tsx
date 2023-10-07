@@ -11,6 +11,8 @@ import zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileType, ISignupFormField, ISignupPayload } from '@/types';
 import { signup, uploadFile } from '@/services';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 const formValidation = zod.object({
   username: zod
@@ -34,6 +36,8 @@ const formValidation = zod.object({
 export default function SignUpForm({}) {
   const [image, setImage] = useState<File>();
   const onChangeImage = (file: File) => setImage(file);
+
+  const router = useRouter();
 
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(formValidation),
@@ -65,7 +69,14 @@ export default function SignUpForm({}) {
 
         signup(signupPayload)
           .then((response) => {
-            console.log('signup', response);
+            if (response.token && response.refreshToken) {
+              Cookies.set('token', response.token);
+              Cookies.set('refreshToken', response.refreshToken);
+              alert('signup successfully');
+              router.push('/');
+            } else {
+              alert('signup failed ...');
+            }
           })
           .catch(() => {
             console.log('signup failed ...');

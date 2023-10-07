@@ -6,11 +6,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 import { ISigninFormField } from '@/types';
+import { signin } from '@/services';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const loginValidation = z.object({
-  username: z
-    .string({ required_error: 'You must provide your username' })
-    .min(3, 'Your username must atleast contain 3 characters'),
+  email: z
+    .string({ required_error: 'You must provide your email' })
+    .email('Your email contains invalid character'),
   password: z
     .string({ required_error: 'You must provide your password' })
     .min(8, 'Your password must atleast contain 8 characters'),
@@ -22,7 +25,24 @@ export default function SigninForm() {
     mode: 'all',
   });
 
-  const onSubmit = (data: ISigninFormField) => {};
+  const router = useRouter();
+
+  const onSubmit = (data: ISigninFormField) => {
+    signin(data)
+      .then((response) => {
+        if (response.refreshToken && response.token) {
+          Cookies.set('token', response.token);
+          Cookies.set('refreshToken', response.refreshToken);
+          alert('login successfully');
+          router.push('/');
+        } else {
+          alert('login failed ...');
+        }
+      })
+      .catch(() => {
+        alert('login failed ...');
+      });
+  };
 
   return (
     <form
@@ -32,8 +52,8 @@ export default function SigninForm() {
       <InputField
         control={control}
         inputType="text"
-        label="Username"
-        name="username"
+        label="Email"
+        name="email"
       />
       <InputField
         control={control}
