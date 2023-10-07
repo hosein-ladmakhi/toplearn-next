@@ -9,7 +9,8 @@ import Textarea from '@/common/Textarea';
 import { useForm } from 'react-hook-form';
 import zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ISignupFormField } from '@/types';
+import { FileType, ISignupFormField, ISignupPayload } from '@/types';
+import { signup, uploadFile } from '@/services';
 
 const formValidation = zod.object({
   username: zod
@@ -39,7 +40,41 @@ export default function SignUpForm({}) {
     mode: 'all',
   });
 
-  const onSubmitForm = (data: ISignupFormField) => {};
+  const onUploadImage = () => {
+    const uploadedFormData = new FormData();
+    uploadedFormData.append('type', FileType.IMAGE);
+    uploadedFormData.append('file', image!);
+    return uploadFile(uploadedFormData);
+  };
+
+  const onSubmitForm = (data: ISignupFormField) => {
+    if (!image) {
+      alert('Please select your picture');
+      return;
+    }
+    onUploadImage()
+      .then((file) => {
+        const signupPayload: ISignupPayload = {
+          image: file.id,
+          phone: data.mobile,
+          username: data.username,
+          bio: data.bio,
+          email: data.email,
+          password: data.password,
+        };
+
+        signup(signupPayload)
+          .then((response) => {
+            console.log('signup', response);
+          })
+          .catch(() => {
+            console.log('signup failed ...');
+          });
+      })
+      .catch(() => {
+        alert('uploading image failed ...');
+      });
+  };
 
   return (
     <form
