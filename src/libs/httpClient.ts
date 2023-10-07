@@ -1,10 +1,12 @@
 import { BASE_URL } from '@/constants';
+import { cookies } from 'next/headers';
 
 export const httpQuery = (url: string) =>
   fetch(BASE_URL + url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${cookies().get('token')?.value}`,
     },
   }).then((res) => res.json());
 

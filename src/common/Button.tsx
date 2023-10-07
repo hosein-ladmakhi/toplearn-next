@@ -2,11 +2,17 @@ interface IProps {
   children: string;
   options?: string;
   isLoading?: boolean;
+  onClick?: () => void;
 }
 
-export default function Button({ children, options = '', isLoading }: IProps) {
+export default function Button({
+  children,
+  options = '',
+  isLoading,
+  onClick = () => {},
+}: IProps) {
   return (
-    <button className={`btn btn-neutral my-5 ${options}`}>
+    <button onClick={onClick} className={`btn btn-neutral my-5 ${options}`}>
       {isLoading && <span className="loading loading-spinner"></span>}
       {children}
     </button>
