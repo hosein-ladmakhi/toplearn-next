@@ -27,7 +27,7 @@ export default function SigninForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit as any)}
-      className="sm:w-4/12 xs:9/12"
+      className="mx-auto sm:w-4/12 xs:9/12"
     >
       <InputField
         control={control}

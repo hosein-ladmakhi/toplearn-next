@@ -44,7 +44,7 @@ export default function SignUpForm({}) {
   return (
     <form
       onSubmit={handleSubmit(onSubmitForm as any)}
-      className="sm:w-4/12 xs:9/12"
+      className="sm:w-4/12 xs:9/12 mx-auto"
     >
       <ImagePicker file={image} onChangeFile={onChangeImage} />
 

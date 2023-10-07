@@ -13,9 +13,7 @@ export default function SigninPage() {
         Sign-in Page
       </Typography>
       <SigninForm />
-      <Link href="/auth/sign-up" className="link">
-        Create New Account
-      </Link>
+      <Link href="/auth/sign-up">Create New Account</Link>
     </>
   );
 }

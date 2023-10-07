@@ -13,9 +13,7 @@ export default function SignupPage() {
         Sign-up Page
       </Typography>
       <SignUpForm />
-      <Link href="/auth/sign-in" className="link">
-        Login To Your Created Account
-      </Link>
+      <Link href="/auth/sign-in">Login To Your Created Account</Link>
     </>
   );
 }
