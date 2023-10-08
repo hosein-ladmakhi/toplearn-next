@@ -7,7 +7,7 @@ interface IProps {
 
 export default function MobileHeader({ onOpenDrawer }: IProps) {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center mb-5">
       <Typography variant="h1">Dashboard</Typography>
       <div
         onClick={onOpenDrawer}

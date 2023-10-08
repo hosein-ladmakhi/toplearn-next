@@ -16,11 +16,11 @@ export default function RootDashboardLayout({ children }: IProps) {
   const [isMobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
   return (
-    <div className="p-5" style={{ height }}>
+    <div className="p-5 w-full" style={{ height }}>
       {platform === 'mobile' && (
         <MobileHeader onOpenDrawer={() => setMobileDrawerOpen(true)} />
       )}
-      <div className="gap-10 flex justify-start items-start h-full">
+      <div className="gap-10 flex justify-start items-start h-full w-full">
         <div
           className={`h-full md:w-2/12 md:relative absolute top-0 left-0 ${
             isMobileDrawerOpen ? 'w-6/12' : 'w-0'
@@ -31,7 +31,7 @@ export default function RootDashboardLayout({ children }: IProps) {
             onClose={() => setMobileDrawerOpen(false)}
           />
         </div>
-        <div className="h-full md:w-10/12 w-12/12">{children}</div>
+        <div className="h-full md:w-10/12 w-full">{children}</div>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { IFile } from './index';
+
 export enum UserStatus {
   BLOCK = 'BLOCK',
   ACTIVE = 'ACTIVE',
@@ -8,7 +10,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  image?: File;
+  image?: IFile;
   bio?: string;
   phone?: string;
   firstName?: string;

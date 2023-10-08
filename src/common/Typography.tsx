@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 interface IProps {
-  children: string;
-  variant: 'h1' | 'h2' | 'h3' | 'h4';
+  children: string | string[] | ReactNode;
+  variant: 'h1' | 'h2' | 'h3' | 'h4' | 'caption';
   moreClassNames?: string;
 }
 
@@ -28,6 +30,8 @@ export default function Typography({
       return (
         <h4 className={`text-sm ${defaultHeadingClassName}`}>{children}</h4>
       );
+    case 'caption':
+      return <p className="text-sm">{children}</p>;
     default:
       return <></>;
   }

@@ -1,12 +1,16 @@
 import { BASE_URL } from '@/constants';
-import { cookies } from 'next/headers';
+
+const token =
+  typeof window === typeof undefined
+    ? require('next/headers').cookies().get('token')?.value
+    : require('js-cookie').get('token');
 
 export const httpQuery = (url: string) =>
   fetch(BASE_URL + url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${cookies().get('token')?.value}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => res.json());
 
@@ -27,6 +31,11 @@ export const httpMutation = (
       'Content-Type': 'application/json',
     };
   }
+
+  requestOptions.headers = {
+    ...requestOptions.headers,
+    Authorization: `Bearer ${token}`,
+  };
   return fetch(BASE_URL + url, {
     method: options.method,
     ...requestOptions,
