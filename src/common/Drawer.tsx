@@ -21,6 +21,10 @@ const items = [
     href: '/dashboard/blogs',
     text: 'Blogs',
   },
+  {
+    href: '/dashboard/banks',
+    text: 'Banks',
+  },
 ];
 
 interface IProps {
@@ -31,7 +35,7 @@ interface IProps {
 export default function Drawer({ onClose, platform }: IProps) {
   const pathname = usePathname();
   return (
-    <div className="p-4 h-full w-full bg-base-200 relative">
+    <div className="p-4 h-full w-full bg-base-200 z-50 relative">
       {platform === 'mobile' && (
         <Button onClick={onClose} options="w-full">
           Close Button

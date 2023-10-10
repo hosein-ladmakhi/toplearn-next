@@ -1,13 +1,7 @@
 'use client';
 
 import { IReactHookFormController } from '@/types';
-import {
-  Controller,
-  ControllerFieldState,
-  ControllerRenderProps,
-  FieldValues,
-  UseFormStateReturn,
-} from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 interface IProps {
   label?: string;

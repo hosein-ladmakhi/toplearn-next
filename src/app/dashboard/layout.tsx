@@ -16,7 +16,7 @@ export default function RootDashboardLayout({ children }: IProps) {
   const [isMobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
   return (
-    <div className="p-5 w-full" style={{ height }}>
+    <div className="p-5 w-full pb-20" style={{ height }}>
       {platform === 'mobile' && (
         <MobileHeader onOpenDrawer={() => setMobileDrawerOpen(true)} />
       )}
@@ -31,7 +31,9 @@ export default function RootDashboardLayout({ children }: IProps) {
             onClose={() => setMobileDrawerOpen(false)}
           />
         </div>
-        <div className="h-full md:w-10/12 w-full">{children}</div>
+        <div className="h-full md:w-10/12 w-full overflow-auto scroll-smooth">
+          {children}
+        </div>
       </div>
     </div>
   );
