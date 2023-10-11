@@ -23,7 +23,6 @@ export default function InputField({
     const errorMessage = formState?.errors?.[field!?.name]?.message;
     const labelErrorClass = errorMessage ? 'text-red-500' : '';
     const inputErrorClass = errorMessage ? 'input-error' : '';
-
     return (
       <>
         {label && <label className={`label ${labelErrorClass}`}>{label}</label>}

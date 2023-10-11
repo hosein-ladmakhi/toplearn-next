@@ -6,3 +6,5 @@ export interface Bank {
 }
 
 export type Banks = Bank[];
+
+export type CreateBankPayload = Omit<Bank, 'id'>;

@@ -5,13 +5,14 @@ const token =
     ? require('next/headers').cookies().get('token')?.value
     : require('js-cookie').get('token');
 
-export const httpQuery = (url: string) =>
+export const httpQuery = (url: string, tags?: string[]) =>
   fetch(BASE_URL + url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+    next: { tags: tags || [] },
   }).then((res) => res.json());
 
 export const httpMutation = (

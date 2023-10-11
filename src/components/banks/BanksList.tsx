@@ -6,5 +6,11 @@ interface IProps {
 }
 
 export default function BanksList({ banks }: IProps) {
-  return banks.map((bank) => <BankItem key={bank.id} bank={bank} />);
+  return (
+    <>
+      {banks.map((bank) => (
+        <BankItem key={bank.id} bank={bank} />
+      ))}
+    </>
+  );
 }

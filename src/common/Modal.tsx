@@ -15,7 +15,8 @@ export default function Modal({ children, cardClasses, title }: IProps) {
   const { onSetQueryState, searchParms } = useSearchQueryState();
   const onClose = () => onSetQueryState('is-open', false);
 
-  if (searchParms.get('is-open') === 'false') return <></>;
+  if (searchParms.get('is-open') === 'false' || !searchParms.get('is-open'))
+    return <></>;
 
   return (
     <div
