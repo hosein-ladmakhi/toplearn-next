@@ -12,7 +12,10 @@ export default function Button({
   onClick = () => {},
 }: IProps) {
   return (
-    <button onClick={onClick} className={`btn btn-neutral my-5 ${options}`}>
+    <button
+      onClick={onClick}
+      className={`cursor-pointer btn btn-neutral my-5 ${options}`}
+    >
       {isLoading && <span className="loading loading-spinner"></span>}
       {children}
     </button>

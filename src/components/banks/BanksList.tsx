@@ -1,11 +1,10 @@
-'use client';
+import { Banks } from '@/types';
+import BankItem from './BankItem';
 
-import Button from '@/common/Button';
+interface IProps {
+  banks: Banks;
+}
 
-export default function BanksList() {
-  return (
-    <>
-      <Button>Create Bank</Button>
-    </>
-  );
+export default function BanksList({ banks }: IProps) {
+  return banks.map((bank) => <BankItem key={bank.id} bank={bank} />);
 }

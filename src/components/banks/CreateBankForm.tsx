@@ -5,7 +5,9 @@ import InputField from '@/common/InputField';
 import Modal from '@/common/Modal';
 import Toggle from '@/common/Toggle';
 
-export default function CreateBankForm() {
+export default function CreateBankFormModal() {
+  console.log('Modal');
+
   return (
     <Modal title="Create Bank" cardClasses="bg-base-300 p-5 rounded">
       <form>
