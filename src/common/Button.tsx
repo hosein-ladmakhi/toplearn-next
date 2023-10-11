@@ -14,7 +14,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={`cursor-pointer btn btn-neutral my-5 ${options}`}
+      className={`cursor-pointer btn btn-neutral ${options}`}
     >
       {isLoading && <span className="loading loading-spinner"></span>}
       {children}

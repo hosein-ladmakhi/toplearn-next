@@ -10,3 +10,10 @@ export interface IReactHookFormController {
   fieldState: ControllerFieldState;
   formState: UseFormStateReturn<FieldValues>;
 }
+
+export interface IButtonGroup {
+  className?: string;
+  action: any;
+  text: string;
+  type: 'server' | 'client';
+}

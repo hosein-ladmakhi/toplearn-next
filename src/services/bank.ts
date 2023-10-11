@@ -9,3 +9,6 @@ export const createBank = (data: CreateBankPayload) =>
     data,
     isFormData: false,
   }) as Promise<Bank>;
+
+export const deleteBank = (id: number) =>
+  httpMutation(`/banks/${id}`, { method: 'DELETE' });

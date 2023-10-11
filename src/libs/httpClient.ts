@@ -20,13 +20,18 @@ export const httpMutation = (
   options: {
     method: 'POST' | 'PATCH' | 'PUT' | 'DELETE';
     isFormData?: boolean;
-    data: any;
+    data?: any;
   },
 ) => {
-  const requestOptions: RequestInit = { body: options.data, headers: {} };
+  const requestOptions: RequestInit = { headers: {} };
+  if (options.data) {
+    requestOptions.body = options.data;
+  }
 
   if (!options.isFormData) {
-    requestOptions.body = JSON.stringify(options.data);
+    if (options.data) {
+      requestOptions.body = JSON.stringify(options.data);
+    }
     requestOptions.headers = {
       ...requestOptions.headers,
       'Content-Type': 'application/json',
