@@ -1,8 +1,8 @@
-import Avatar from '@/common/Avatar';
-import Typography from '@/common/Typography';
-import ProfileReportCard from '@/components/profile/ProfileReportCard';
-import { currencyFormat, numberFormat } from '@/helpers';
-import { userProfile } from '@/services/user';
+import Avatar from "@/common/Avatar";
+import Typography from "@/common/Typography";
+import ProfileReportCard from "@/components/profile/ProfileReportCard";
+import { currencyFormat, numberFormat } from "@/helpers";
+import { userProfile } from "@/services/user";
 import {
   AiOutlineUser as AiOutlineUserIcon,
   AiTwotonePhone as AiTwotonePhoneIcon,
@@ -12,13 +12,13 @@ import {
   AiFillLike as AiFillLikeIcon,
   AiFillVideoCamera as AiFillVideoCameraIcon,
   AiOutlinePieChart as AiOutlinePieChartIcon,
-} from 'react-icons/ai';
-import { BsPen as BsPenIcon } from 'react-icons/bs';
+} from "react-icons/ai";
+import { BsPen as BsPenIcon } from "react-icons/bs";
 
 export const generateMetadata = async () => {
   const profile = await userProfile();
   return {
-    title: profile?.username || 'Profile Page',
+    title: profile?.username || "Profile Page",
   };
 };
 
@@ -59,16 +59,16 @@ export default async function ProfilePage() {
         icon={<AiOutlineUserIcon fontSize={50} />}
         items={[
           {
-            text: 'All Members',
-            value: '20',
+            text: "All Members",
+            value: "20",
           },
           {
-            text: 'Disabled Members',
-            value: '0',
+            text: "Disabled Members",
+            value: "0",
           },
           {
-            text: 'Enabled Members',
-            value: '20',
+            text: "Enabled Members",
+            value: "20",
           },
         ]}
       />
@@ -76,15 +76,15 @@ export default async function ProfilePage() {
         icon={<AiOutlineDollarIcon fontSize={50} />}
         items={[
           {
-            text: 'Current Year Salary',
+            text: "Current Year Salary",
             value: currencyFormat(1000),
           },
           {
-            text: 'Current Month Salary',
+            text: "Current Month Salary",
             value: currencyFormat(500),
           },
           {
-            text: 'Today Salary',
+            text: "Today Salary",
             value: currencyFormat(100),
           },
         ]}
@@ -93,15 +93,15 @@ export default async function ProfilePage() {
         icon={<AiFillAppstoreIcon fontSize={50} />}
         items={[
           {
-            text: 'In Sale Courses',
+            text: "In Sale Courses",
             value: numberFormat(50),
           },
           {
-            text: 'Done Courses',
+            text: "Done Courses",
             value: numberFormat(50),
           },
           {
-            text: 'Pre Sale Courses',
+            text: "Pre Sale Courses",
             value: numberFormat(1000),
           },
         ]}
@@ -110,15 +110,15 @@ export default async function ProfilePage() {
         icon={<AiFillLikeIcon fontSize={50} />}
         items={[
           {
-            text: 'Total Likes',
+            text: "Total Likes",
             value: numberFormat(100000),
           },
           {
-            text: 'Total DisLikes',
+            text: "Total DisLikes",
             value: numberFormat(500),
           },
           {
-            text: 'Total Balance',
+            text: "Total Balance",
             value: numberFormat(400),
           },
         ]}
@@ -127,15 +127,15 @@ export default async function ProfilePage() {
         icon={<AiFillVideoCameraIcon fontSize={50} />}
         items={[
           {
-            text: 'All Videos',
+            text: "All Videos",
             value: numberFormat(50),
           },
           {
-            text: 'Pending Videos',
+            text: "Pending Videos",
             value: numberFormat(500),
           },
           {
-            text: 'In Process Videos',
+            text: "In Process Videos",
             value: numberFormat(1200),
           },
         ]}
@@ -144,15 +144,15 @@ export default async function ProfilePage() {
         icon={<AiOutlinePieChartIcon fontSize={50} />}
         items={[
           {
-            text: 'Current Month Viewers',
+            text: "Current Month Viewers",
             value: numberFormat(50),
           },
           {
-            text: 'Current Week Viewers',
+            text: "Current Week Viewers",
             value: numberFormat(500),
           },
           {
-            text: 'Current Day Viewers',
+            text: "Current Day Viewers",
             value: numberFormat(1200),
           },
         ]}

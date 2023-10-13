@@ -1,5 +1,6 @@
-export interface Bank {
-  id: number;
+import { CoreEntity } from ".";
+
+export interface Bank extends CoreEntity {
   name: string;
   slug: string;
   isActive: boolean;
@@ -7,4 +8,7 @@ export interface Bank {
 
 export type Banks = Bank[];
 
-export type CreateBankPayload = Omit<Bank, 'id'>;
+export type CreateOrUpdateBankPayload = Omit<
+  Bank,
+  "id" | "createdAt" | "deletedAt" | "updatedAt"
+>;

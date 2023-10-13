@@ -1,2 +1,2 @@
-export const BASE_URL = 'http://localhost:3005/api/v1';
-export const MEDIA_URL = 'http://localhost:3005';
+export const BASE_URL = "http://localhost:8090/api/v1";
+export const MEDIA_URL = "http://localhost:8090";

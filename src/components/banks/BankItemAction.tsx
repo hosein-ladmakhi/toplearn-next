@@ -1,45 +1,47 @@
-'use client';
+"use client";
 
-import { deleteBankAction } from '@/app/dashboard/banks/action';
-import ButtonGroup from '@/common/ButtonGroup';
-import { Bank, IButtonGroup } from '@/types';
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { deleteBankAction } from "@/app/dashboard/banks/action";
+import ButtonGroup from "@/common/ButtonGroup";
+import { useSearchQueryState } from "@/hooks/useSearchQueryState";
+import { Bank, IButtonGroup } from "@/types";
+import { useRouter } from "next/navigation";
+import { useMemo, useTransition } from "react";
 
 interface IProps {
   selectedBank: Bank;
 }
 
 export default function BankItemAction({ selectedBank }: IProps) {
-  const [bank, setBank] = useState<Bank | undefined>(selectedBank);
-  useEffect(() => {
-    return () => {
-      setBank(undefined);
-      console.log(bank);
-    };
-  }, [selectedBank]);
-
   const [deletePending, deleteTransition] = useTransition();
+  const { onSetQueryState } = useSearchQueryState();
+
   const onDeleteBank = () =>
     deleteTransition(() => {
-      deleteBankAction(bank!);
+      deleteBankAction(selectedBank!);
     });
+
+  const onUpdateBank = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onSetQueryState("modal-status", true);
+    onSetQueryState("updated-bank", selectedBank.id);
+  };
 
   const actions: IButtonGroup[] = useMemo(() => {
     return [
       {
         action: onDeleteBank,
-        type: 'server',
-        text: 'Delete',
-        className: 'mt-5 mr-2',
+        type: "server",
+        text: "Delete",
+        className: "mt-5 mr-2",
       },
       {
-        action: () => {},
-        type: 'client',
-        text: 'update',
-        className: 'mt-5',
+        action: onUpdateBank,
+        type: "client",
+        text: "Update",
+        className: "mt-5",
       },
     ];
-  }, []);
+  }, [selectedBank]);
 
   return (
     <ButtonGroup loading={deletePending} type="server" actions={actions} />

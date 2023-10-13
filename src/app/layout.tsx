@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import '@/assets/styles/global.css';
+import { ReactNode } from "react";
+import "@/assets/styles/global.css";
 
 interface IProps {
   children: ReactNode;
@@ -7,7 +7,7 @@ interface IProps {
 
 export default function RootLayout({ children }: IProps) {
   return (
-    <html>
+    <html data-theme="dark">
       <body>{children}</body>
     </html>
   );

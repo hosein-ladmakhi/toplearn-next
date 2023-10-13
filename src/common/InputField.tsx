@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { IReactHookFormController } from '@/types';
-import { Controller } from 'react-hook-form';
+import { IReactHookFormController } from "@/types";
+import { Controller } from "react-hook-form";
 
 interface IProps {
   label?: string;
-  inputType: 'text' | 'password' | 'email';
+  inputType: "text" | "password" | "email";
   name: string;
   control?: any;
+  containerClasses?: string;
 }
 
 export default function InputField({
@@ -15,14 +16,15 @@ export default function InputField({
   label,
   name,
   control,
+  containerClasses = "",
 }: IProps) {
   const printInput = ({
     field,
     formState,
   }: Partial<IReactHookFormController>) => {
     const errorMessage = formState?.errors?.[field!?.name]?.message;
-    const labelErrorClass = errorMessage ? 'text-red-500' : '';
-    const inputErrorClass = errorMessage ? 'input-error' : '';
+    const labelErrorClass = errorMessage ? "text-red-500" : "";
+    const inputErrorClass = errorMessage ? "input-error" : "";
     return (
       <>
         {label && <label className={`label ${labelErrorClass}`}>{label}</label>}
@@ -42,7 +44,7 @@ export default function InputField({
   };
 
   return (
-    <div className="form-control w-full my-3">
+    <div className={`form-control ${containerClasses} `}>
       {control ? (
         <Controller control={control} name={name} render={printInput} />
       ) : (

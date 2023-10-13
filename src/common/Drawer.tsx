@@ -1,29 +1,37 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import Button from './Button';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Button from "./Button";
 
 const items = [
   {
-    href: '/dashboard',
-    text: 'Dashboard',
+    href: "/auth/sign-in",
+    text: "Sign in",
   },
   {
-    href: '/dashboard/profile',
-    text: 'Profile',
+    href: "/auth/sign-up",
+    text: "Signup",
   },
   {
-    href: '/dashboard/courses',
-    text: 'Courses',
+    href: "/dashboard",
+    text: "Dashboard",
   },
   {
-    href: '/dashboard/blogs',
-    text: 'Blogs',
+    href: "/dashboard/profile",
+    text: "Profile",
   },
   {
-    href: '/dashboard/banks',
-    text: 'Banks',
+    href: "/dashboard/courses",
+    text: "Courses",
+  },
+  {
+    href: "/dashboard/blogs",
+    text: "Blogs",
+  },
+  {
+    href: "/dashboard/banks",
+    text: "Banks",
   },
 ];
 
@@ -36,7 +44,7 @@ export default function Drawer({ onClose, platform }: IProps) {
   const pathname = usePathname();
   return (
     <div className="p-4 h-full w-full bg-base-200 z-50 relative">
-      {platform === 'mobile' && (
+      {platform === "mobile" && (
         <Button onClick={onClose} options="w-full">
           Close Button
         </Button>
@@ -45,7 +53,7 @@ export default function Drawer({ onClose, platform }: IProps) {
       <ul className="menu h-full text-base-content w-full rounded">
         {items.map((item) => (
           <li
-            className={item.href === pathname ? 'text-white' : ''}
+            className={item.href === pathname ? "text-white" : ""}
             key={item.href}
           >
             <Link href={item.href}>{item.text}</Link>

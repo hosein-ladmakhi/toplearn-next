@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useScreenDimention } from './useScreenDimention';
+import { useScreenDimention } from "./useScreenDimention";
 
 export const usePlatform = () => {
   const { width } = useScreenDimention();
 
   if (width >= 300 && width <= 768) {
-    return 'mobile';
+    return "mobile";
   }
 
-  return 'desktop';
+  return "desktop";
 };

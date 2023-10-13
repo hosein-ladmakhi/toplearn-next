@@ -1,39 +1,33 @@
-'use server';
+"use server";
 
-import { prepareToastMessage } from '@/helpers';
-import { createBank, deleteBank } from '@/services';
-import { Bank, CreateBankPayload } from '@/types';
-import { revalidateTag } from 'next/cache';
+import { createBank, deleteBank, updateBank } from "@/services";
+import { Bank, CreateOrUpdateBankPayload } from "@/types";
+import { revalidateTag } from "next/cache";
 
-export const createBankAction = async (data: CreateBankPayload) => {
+export const createBankAction = async (data: CreateOrUpdateBankPayload) => {
   const bank = await createBank(data);
   if (!bank.id) {
-    prepareToastMessage({
-      message: 'Create bank has failed ...',
-      type: 'error',
-    });
     return;
   }
-  prepareToastMessage({
-    message: 'Create bank done successfully',
-    type: 'success',
-  });
-  revalidateTag('banks');
+  revalidateTag("banks");
 };
 
 export const deleteBankAction = async (selectedBank: Bank) => {
   const response = await deleteBank(selectedBank.id);
-  console.log(response, selectedBank.id);
   if (response) {
-    prepareToastMessage({
-      message: `Delete ${selectedBank?.name} done successfully`,
-      type: 'success',
-    });
-    revalidateTag('banks');
+    revalidateTag("banks");
     return;
   }
-  prepareToastMessage({
-    message: `Delete ${selectedBank?.name} has failed ...`,
-    type: 'error',
-  });
+};
+
+export const updateBankAction = async (
+  id: number,
+  data: Partial<CreateOrUpdateBankPayload>
+) => {
+  const response = await updateBank(id, data);
+  if (!response?.affected) {
+    return;
+  }
+  revalidateTag("banks");
+  return;
 };

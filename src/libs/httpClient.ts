@@ -1,27 +1,34 @@
-import { BASE_URL } from '@/constants';
+import { BASE_URL } from "@/constants";
+import { tokenStore } from "@/store";
 
-const token =
-  typeof window === typeof undefined
-    ? require('next/headers').cookies().get('token')?.value
-    : require('js-cookie').get('token');
+const token = tokenStore?.getState()?.token;
+
+const tokenAuthHeader: object = token
+  ? { Authorization: `Bearer ${token}` }
+  : {};
 
 export const httpQuery = (url: string, tags?: string[]) =>
   fetch(BASE_URL + url, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      ...tokenAuthHeader,
     },
     next: { tags: tags || [] },
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .catch((error) => {
+      console.log("HTTP QUERY", error.message);
+      return error;
+    });
 
 export const httpMutation = (
   url: string,
   options: {
-    method: 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+    method: "POST" | "PATCH" | "PUT" | "DELETE";
     isFormData?: boolean;
     data?: any;
-  },
+  }
 ) => {
   const requestOptions: RequestInit = { headers: {} };
   if (options.data) {
@@ -34,16 +41,21 @@ export const httpMutation = (
     }
     requestOptions.headers = {
       ...requestOptions.headers,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
   }
 
   requestOptions.headers = {
     ...requestOptions.headers,
-    Authorization: `Bearer ${token}`,
+    ...tokenAuthHeader,
   };
   return fetch(BASE_URL + url, {
     method: options.method,
     ...requestOptions,
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .catch((error) => {
+      console.log("HTTP MUTATION", error.message);
+      return error;
+    });
 };

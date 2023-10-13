@@ -1,21 +1,36 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import Typography from './Typography';
-import { BsX } from 'react-icons/bs';
-import { useSearchQueryState } from '@/hooks/useSearchQueryState';
+import { ReactNode } from "react";
+import Typography from "./Typography";
+import { BsX } from "react-icons/bs";
+import { useSearchQueryState } from "@/hooks/useSearchQueryState";
 
 interface IProps {
   children: ReactNode;
   cardClasses: string;
   title: string;
+  onClose?: () => void;
 }
 
-export default function Modal({ children, cardClasses, title }: IProps) {
+export default function Modal({
+  children,
+  cardClasses,
+  title,
+  onClose: onCustomClose = () => {},
+}: IProps) {
   const { onSetQueryState, searchParms } = useSearchQueryState();
-  const onClose = () => onSetQueryState('is-open', false);
+  const onClose = () => {
+    if (onCustomClose) {
+      onCustomClose();
+      return;
+    }
+    onSetQueryState("modal-status", undefined);
+  };
 
-  if (searchParms.get('is-open') === 'false' || !searchParms.get('is-open'))
+  if (
+    searchParms.get("modal-status") === "false" ||
+    !searchParms.get("modal-status")
+  )
     return <></>;
 
   return (

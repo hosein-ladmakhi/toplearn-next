@@ -2,12 +2,12 @@ interface IProps {
   children: string;
   options?: string;
   isLoading?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 export default function Button({
   children,
-  options = '',
+  options = "",
   isLoading,
   onClick = () => {},
 }: IProps) {
