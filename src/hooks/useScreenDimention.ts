@@ -1,6 +1,5 @@
 'use client';
 
-import { IS_WINDOW_DEFINED } from '@/constants';
 import { useEffect, useState } from 'react';
 
 export const useScreenDimention = () => {

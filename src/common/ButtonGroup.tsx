@@ -1,11 +1,10 @@
-"use client";
+'use client';
 
-import { IButtonGroup } from "@/types";
-import Button from "./Button";
+import { IButtonGroup } from '@/types';
+import Button from './Button';
 
 interface IProps {
   actions: IButtonGroup[];
-  type: "server" | "client";
   loading?: boolean;
 }
 
@@ -18,11 +17,11 @@ export default function ButtonGroup({ actions, loading }: IProps) {
   return (
     <div className="flex">
       {actions.map(({ action, text, type, className }) =>
-        type === "client" ? (
+        type === 'client' ? (
           <Button
             key={text}
             isLoading={loading}
-            options={className || ""}
+            options={className || ''}
             onClick={onClickEvent.bind(null, action)}
           >
             {text}
@@ -32,12 +31,12 @@ export default function ButtonGroup({ actions, loading }: IProps) {
             <Button
               onClick={(e) => e.stopPropagation()}
               isLoading={loading}
-              options={className || ""}
+              options={className || ''}
             >
               {text}
             </Button>
           </form>
-        )
+        ),
       )}
     </div>
   );

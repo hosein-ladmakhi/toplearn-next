@@ -1,5 +1,13 @@
-import { ReactNode } from "react";
-import "@/assets/styles/global.css";
+import { ReactNode } from 'react';
+import '@/assets/styles/global.css';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'TopLearn',
+    template: '%s | TopLearn.com',
+  },
+};
 
 interface IProps {
   children: ReactNode;
