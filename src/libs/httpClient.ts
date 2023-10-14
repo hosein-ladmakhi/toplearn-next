@@ -1,5 +1,5 @@
-import { BASE_URL } from "@/constants";
-import { tokenStore } from "@/store";
+import { BASE_URL } from '@/constants';
+import { tokenStore } from '@/store';
 
 const token = tokenStore?.getState()?.token;
 
@@ -9,26 +9,26 @@ const tokenAuthHeader: object = token
 
 export const httpQuery = (url: string, tags?: string[]) =>
   fetch(BASE_URL + url, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...tokenAuthHeader,
     },
     next: { tags: tags || [] },
   })
     .then((res) => res.json())
     .catch((error) => {
-      console.log("HTTP QUERY", error.message);
+      console.log('HTTP QUERY', error.message);
       return error;
     });
 
 export const httpMutation = (
   url: string,
   options: {
-    method: "POST" | "PATCH" | "PUT" | "DELETE";
+    method: 'POST' | 'PATCH' | 'PUT' | 'DELETE';
     isFormData?: boolean;
     data?: any;
-  }
+  },
 ) => {
   const requestOptions: RequestInit = { headers: {} };
   if (options.data) {
@@ -41,7 +41,7 @@ export const httpMutation = (
     }
     requestOptions.headers = {
       ...requestOptions.headers,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
   }
 
@@ -55,7 +55,7 @@ export const httpMutation = (
   })
     .then((res) => res.json())
     .catch((error) => {
-      console.log("HTTP MUTATION", error.message);
+      console.log('HTTP MUTATION', error.message);
       return error;
     });
 };
