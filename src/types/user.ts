@@ -1,4 +1,4 @@
-import { IFile } from './index';
+import { CoreEntity, IFile } from './index';
 
 export enum UserStatus {
   BLOCK = 'BLOCK',
@@ -6,7 +6,7 @@ export enum UserStatus {
   DISABLE = 'DISABLE',
 }
 
-export interface User {
+export interface User extends CoreEntity {
   username: string;
   email: string;
   password: string;
@@ -20,3 +20,5 @@ export interface User {
   // roles: Role;
   // orders?: Order[];
 }
+
+export type Users = User[];

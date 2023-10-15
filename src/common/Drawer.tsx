@@ -37,6 +37,10 @@ const items = [
     href: '/dashboard/categories',
     text: 'Categories',
   },
+  {
+    href: '/dashboard/users',
+    text: 'Users',
+  },
 ];
 
 interface IProps {
