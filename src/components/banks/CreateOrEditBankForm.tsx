@@ -1,52 +1,51 @@
-"use client";
+'use client';
 
 import {
   createBankAction,
   updateBankAction,
-} from "@/app/dashboard/banks/action";
-import Button from "@/common/Button";
-import InputField from "@/common/InputField";
-import Modal from "@/common/Modal";
-import Toggle from "@/common/Toggle";
-import { useSearchQueryState } from "@/hooks/useSearchQueryState";
-import { getBankById } from "@/services";
-import { CreateOrUpdateBankPayload } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import zod from "zod";
+} from '@/app/dashboard/banks/action';
+import Button from '@/common/Button';
+import InputField from '@/common/InputField';
+import Modal from '@/common/Modal';
+import Toggle from '@/common/Toggle';
+import { useSearchQueryState } from '@/hooks/useSearchQueryState';
+import { getBankById } from '@/services';
+import { CreateOrUpdateBankPayload } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import zod from 'zod';
 
 export const createBankValidation = zod.object({
   name: zod
-    .string({ required_error: "You must provided bank name" })
-    .min(3, "Your name must be more than 3 character"),
+    .string({ required_error: 'You must provided bank name' })
+    .min(3, 'Your name must be more than 3 character'),
   slug: zod
-    .string({ required_error: "You must provided bank slug" })
-    .min(3, "Your name must be more than 3 character"),
+    .string({ required_error: 'You must provided bank slug' })
+    .min(3, 'Your name must be more than 3 character'),
   isActive: zod.boolean().optional(),
 });
 
 export default function CreateOrEditBankFormModal() {
   const { searchParms } = useSearchQueryState();
-  const defaultBankId = searchParms.get("updated-bank");
+  const defaultBankId = searchParms.get('updated-bank');
 
   const { control, handleSubmit, reset, setValue } =
     useForm<CreateOrUpdateBankPayload>({
       resolver: zodResolver(createBankValidation),
       defaultValues: {
         isActive: false,
-        name: "",
-        slug: "",
+        name: '',
+        slug: '',
       },
     });
 
   useEffect(() => {
     if (defaultBankId) {
       getBankById(+defaultBankId).then((bank) => {
-        console.log(bank);
-        setValue("isActive", !!bank.isActive);
-        setValue("name", bank.name);
-        setValue("slug", bank.slug);
+        setValue('isActive', !!bank.isActive);
+        setValue('name', bank.name);
+        setValue('slug', bank.slug);
         return bank;
       });
     }
@@ -65,12 +64,12 @@ export default function CreateOrEditBankFormModal() {
     });
 
   const onCloseModal = () => {
-    onSetQueryState("updated-bank", undefined);
-    onSetQueryState("modal-status", undefined);
+    onSetQueryState('updated-bank', undefined);
+    onSetQueryState('modal-status', undefined);
     reset();
   };
 
-  const actionText = defaultBankId ? "Update Bank" : "Create Bank";
+  const actionText = defaultBankId ? 'Update Bank' : 'Create Bank';
 
   return (
     <Modal

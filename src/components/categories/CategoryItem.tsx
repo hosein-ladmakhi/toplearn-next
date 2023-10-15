@@ -8,14 +8,8 @@ interface IProps {
 
 export default function CategoryItem({ category }: IProps) {
   return (
-    <Link
-      href={`/dashboard/categories/${category.id}`}
-      className="block border-b-2 border-gray-500 py-3"
-    >
-      <Typography variant="h1">Name : {category.title}</Typography>
-      <Typography variant="caption">
-        Created At : {new Date(category.createdAt).toLocaleDateString()}
-      </Typography>
+    <Link href={`/dashboard/categories/${category.id}`} className="block py-3">
+      <Typography variant="h1">{category.title}</Typography>
     </Link>
   );
 }

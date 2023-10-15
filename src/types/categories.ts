@@ -9,7 +9,13 @@ export interface Category extends CoreEntity {
 
 export type Categories = Category[];
 
-export type CreateOrUpdateCategoryPayload = Pick<
-  Category,
-  'parent' | 'slug' | 'title'
->;
+export interface CreateOrUpdateCategoryPayload {
+  title: string;
+  slug: string;
+  parent?: string;
+}
+
+export enum CategoriesListType {
+  simple = 'simple',
+  tree = 'tree',
+}

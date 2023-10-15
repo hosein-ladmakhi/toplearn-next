@@ -40,18 +40,20 @@ export default async function CategoryByIdPage({
         <b>UpdatedAt :</b> {new Date(category.updatedAt).toLocaleDateString()}
       </Typography>
       {category?.subcategory?.length! > 0 && (
-        <Typography variant="caption">
-          <b>Sub Categories : </b>
-          {category.subcategory?.map((category) => (
-            <Link
-              key={category.id}
-              href={`/dashboard/categories/${category.id}`}
-            >
-              {category.title}
-              {' - '}
-            </Link>
-          ))}
-        </Typography>
+        <>
+          <Typography moreClassNames="mt-5" variant="h1">
+            Sub Categories
+          </Typography>
+          <ul>
+            {category?.subcategory?.map((subCategory) => (
+              <li key={subCategory.id}>
+                <Link href={`/dashboard/categories/${subCategory.id}`}>
+                  {subCategory.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
       <SingleCategoryAction selectedCategory={category} />
     </div>

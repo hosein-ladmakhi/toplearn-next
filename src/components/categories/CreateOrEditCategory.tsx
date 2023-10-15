@@ -1,14 +1,18 @@
 'use client';
 
-import { createCategoryAction } from '@/app/dashboard/categories/actions';
+import {
+  createCategoryAction,
+  updateCategoryAction,
+} from '@/app/dashboard/categories/actions';
 import Button from '@/common/Button';
 import InputField from '@/common/InputField';
 import Modal from '@/common/Modal';
 import SelectBox from '@/common/SelectBox';
 import { useSearchQueryState } from '@/hooks/useSearchQueryState';
+import { getCategoryById } from '@/services';
 import { Categories, CreateOrUpdateCategoryPayload } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition } from 'react';
+import { useEffect, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import zod from 'zod';
 
@@ -19,7 +23,7 @@ export const createCategoryFormValidation = zod.object({
   slug: zod
     .string({ required_error: 'You must provide your slug' })
     .min(3, 'Your slug must at least contain 3 characters'),
-  parent: zod.string().optional(),
+  parent: zod.any().optional(),
 });
 
 interface IProps {
@@ -27,27 +31,57 @@ interface IProps {
 }
 
 export default function CreateOrEditCategoryModal({ categories }: IProps) {
-  const { onSetQueryState } = useSearchQueryState();
-  const onCloseCreateOrEditModal = () => onSetQueryState('modal-status', false);
+  const { onSetQueryState, searchParms } = useSearchQueryState();
 
-  const { control, handleSubmit, reset } =
+  const { control, handleSubmit, reset, setValue } =
     useForm<CreateOrUpdateCategoryPayload>({
       mode: 'all',
       resolver: zodResolver(createCategoryFormValidation),
-      defaultValues: { title: '', slug: '' },
+      defaultValues: { title: '', slug: '', parent: '' },
     });
+
+  const onCloseCreateOrEditModal = () => {
+    onSetQueryState('modal-status', undefined);
+    onSetQueryState('selected-category', undefined);
+    reset();
+  };
+
+  const selectedCategory = +searchParms.get('selected-category')!;
+
+  useEffect(() => {
+    if (selectedCategory) {
+      getCategoryById(selectedCategory).then((data) => {
+        setValue('title', data.title);
+        setValue('slug', data.slug);
+        if (data.parent) {
+          setValue('parent', data?.parent?.id?.toString());
+        }
+      });
+    }
+  }, [selectedCategory]);
+
   const [createOrEditCategoryPending, startCreateOrEditCategory] =
     useTransition();
 
   const onSubmit = (data: CreateOrUpdateCategoryPayload) =>
     startCreateOrEditCategory(() => {
-      createCategoryAction(data);
-      reset();
+      const payload: CreateOrUpdateCategoryPayload = {
+        title: data.title,
+        slug: data.slug,
+      };
+      if (data.parent) {
+        payload.parent = data.parent;
+      }
+      selectedCategory
+        ? updateCategoryAction(selectedCategory, payload)
+        : createCategoryAction(payload);
       onCloseCreateOrEditModal();
     });
 
+  const actionText = selectedCategory ? 'Update Category' : 'Create Category';
+
   return (
-    <Modal title="Create Category" cardClasses="bg-base-300 p-5 rounded">
+    <Modal title={actionText} cardClasses="bg-base-300 p-5 rounded">
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           control={control}
@@ -63,20 +97,17 @@ export default function CreateOrEditCategoryModal({ categories }: IProps) {
         />
         {categories?.length > 0 && (
           <SelectBox
+            valueKey="id"
+            labelKey="title"
+            defaultOptionLabel="Select Your Category"
             control={control}
             name="parent"
             label="Parent Category"
-            options={[
-              { value: undefined, text: 'Select Your Parent Category' },
-              ...categories?.map((category) => ({
-                text: category.title,
-                value: category.id,
-              })),
-            ]}
+            options={categories}
           />
         )}
         <Button isLoading={createOrEditCategoryPending} options="w-full mt-5">
-          Create Category
+          {actionText}
         </Button>
       </form>
     </Modal>

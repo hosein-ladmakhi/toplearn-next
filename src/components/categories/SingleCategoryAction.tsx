@@ -3,7 +3,13 @@
 import { deleteCategoryAction } from '@/app/dashboard/categories/actions';
 import ButtonGroup from '@/common/ButtonGroup';
 import { useSearchQueryState } from '@/hooks/useSearchQueryState';
-import { Category, IButtonGroup } from '@/types';
+import { getCategories } from '@/services';
+import {
+  Categories,
+  CategoriesListType,
+  Category,
+  IButtonGroup,
+} from '@/types';
 import React, { lazy, useMemo, useState } from 'react';
 
 interface IProps {
@@ -12,6 +18,7 @@ interface IProps {
 
 export default function SingleCategoryAction({ selectedCategory }: IProps) {
   const { onSetQueryState } = useSearchQueryState();
+  const [categories, setCategories] = useState<Categories>([]);
   const [CreateOrEditCategoryModal, setCreateOrEditCategoryModal] =
     useState<any>();
 
@@ -20,6 +27,11 @@ export default function SingleCategoryAction({ selectedCategory }: IProps) {
     onSetQueryState('modal-status', true);
     onSetQueryState('selected-category', selectedCategory?.id);
     setCreateOrEditCategoryModal(lazy(() => import('./CreateOrEditCategory')));
+    if (!categories.length) {
+      getCategories(CategoriesListType.tree).then((categories) =>
+        setCategories(categories),
+      );
+    }
   };
 
   const actions = useMemo((): IButtonGroup[] => {
@@ -40,7 +52,9 @@ export default function SingleCategoryAction({ selectedCategory }: IProps) {
   }, [selectedCategory]);
   return (
     <>
-      {CreateOrEditCategoryModal && <CreateOrEditCategoryModal />}
+      {CreateOrEditCategoryModal && (
+        <CreateOrEditCategoryModal categories={categories} />
+      )}
       <ButtonGroup actions={actions} />
     </>
   );
